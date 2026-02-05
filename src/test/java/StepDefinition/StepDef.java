@@ -66,6 +66,12 @@ public class StepDef {
 	    homepage.SelectBus();
 	}
 	
+	@Then("User check for seats available")
+	public void user_check_for_seats_available() {
+	    homepage.SeatMap();
+	}
+
+	
 	@Then("User selected available seat")
 	public void user_selected_available_seat() {
 	    homepage.SelectSeat();
@@ -76,13 +82,6 @@ public class StepDef {
 	    driver.close();
 	    driver.quit();
 	}
-
-
-
-
-
-
-
-	
-
 }
+
+
