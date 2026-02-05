@@ -11,6 +11,10 @@ Scenario Outline: User Select a Available Seat on RedBus
 			And User click in the calender and select date as "February 2026, 20"
 			And User click on the search button
 			And User click to select bus
+			And User check for seats available
 			And User selected available seat
 			And User close the browser
+			
+			
+			
 			
