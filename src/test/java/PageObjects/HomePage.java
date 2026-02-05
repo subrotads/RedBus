@@ -1,6 +1,9 @@
 package PageObjects;
 
 import java.time.Duration;
+import java.util.List;
+
+import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -41,13 +44,7 @@ public class HomePage {
 	@FindBy(xpath = "//div[contains(@aria-label,'Select Date of Journey.')]")
 	WebElement datePick;
 	
-//	@FindBy(xpath = "//p[contains(@class,'monthYear')]")
-//	WebElement monthYear;
-	
-//	@FindBy(xpath = "//i[contains(@aria-label,'Next month')]")
-//	WebElement nextMonth;
-	
-	@FindBy(xpath = "//div[contains(@aria-label,'Friday, February 20, 2026')]//span[text()='20']")
+	@FindBy(xpath = "//div[contains(@aria-label,'Friday, February 20, 2026')]")
 	WebElement dateOfJou;
 	
 	@FindBy(xpath = "//button[@aria-label=\"Search buses\"]")
@@ -56,8 +53,11 @@ public class HomePage {
 	@FindBy(xpath = "//li[@id='28436388']")
 	WebElement bus;
 	
+	@FindBy(xpath = "//span[contains(@aria-label,'seat type sleeper')]")
+	WebElement seatMap;
+	
 	@FindBy(xpath = "//span[@id='LB1W']")
-	WebElement seat;
+	WebElement seatt;
 	
 	
 	
@@ -87,7 +87,6 @@ public class HomePage {
 	public void DatePicker(String date) {
 		datePick.click();
 		
-//		wait.until(ExpectedConditions.elementToBeClickable(nextMonth)).click();
 		
 		wait.until(ExpectedConditions.elementToBeClickable(dateOfJou)).click();
 	}
@@ -104,14 +103,35 @@ public class HomePage {
 		wait.until(ExpectedConditions.elementToBeClickable(bus)).click();
 	}
 	
-	public void SelectSeat() {
+	public void SeatMap() {
+		wait.until(ExpectedConditions.visibilityOf(seatMap));
 		
-//		 Set<String> windows = driver.getWindowHandles();
-//	        for (String window : windows) {
-//	            driver.switchTo().window(window);
+		List<WebElement> seats = driver.findElements(By.xpath("//span[contains(@aria-label,'seat status')]"));
+		
+		for (WebElement seat : seats) {
+			String seatNumber = seat.getAttribute("id");
+			if(seatNumber == null || seatNumber.isEmpty()) {
+				seatNumber = seat.getText();
+			}
+			String seatClass = seat.getAttribute("aria-label");
+			String status = null;
+			if (seatClass.contains("seat status available")) {
+				status = "Available";
+			} else if (seatClass.contains("seat status sold")) {
+				status = "Sold";
+			}
+			System.out.println("Seat Number: " + seatNumber + " | Status: " + status); 
+		}
+	}
+
+		
+	
+	
+	public void SelectSeat() {
 	            
-	            wait.until(ExpectedConditions.elementToBeClickable(seat)).click();
+	            wait.until(ExpectedConditions.elementToBeClickable(seatt)).click();
 	}
-	}
+}
+
 
 
