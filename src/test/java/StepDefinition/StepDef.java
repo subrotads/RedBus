@@ -2,6 +2,7 @@ package StepDefinition;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 
 import PageObjects.HomePage;
 import io.cucumber.java.en.*;
@@ -15,8 +16,15 @@ public class StepDef {
 	@Given("User Launches the Chrome Browser")
 	public void user_launches_the_chrome_browser() {
 	    WebDriverManager.chromedriver().setup();
-	    driver = new ChromeDriver();
-	    driver.manage().window().maximize();
+	    ChromeOptions options = new ChromeOptions();
+	    options.addArguments("--headless=new");
+	    options.addArguments("--window-size=1920,1080");
+	    options.addArguments("--no-sandbox");
+	    options.addArguments("--disable-dev-shm-usage");
+	    options.addArguments("user-agent=Mozilla/5.0(Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36");
+	    options.addArguments("--disable-blink-features=AutomationControlled");
+	    driver = new ChromeDriver(options);
+	    
 	    homepage = new HomePage(driver);
 	    
 	}
